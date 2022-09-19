@@ -10,6 +10,10 @@ public class Sub3 {
 		this.price = price;
 	}
 
+	public Sub3() {
+		super();
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -24,6 +28,10 @@ public class Sub3 {
 
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+
+	public String priceTag() {
+		return name + " $ " + price;
 	}
 
 }

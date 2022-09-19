@@ -2,75 +2,62 @@ package exercicios;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import exercicios.entities.Sub1;
 import exercicios.entities.Sub2;
 import exercicios.entities.Sub3;
-import exercicios.enums.Enums;
-import exercicios.service.MainSub;
 
 public class Exercicios {
 
 	public static void main(String[] args) throws ParseException {
 		Scanner sc = new Scanner(System.in);
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
-		MainSub order;
-		Sub1 client=new Sub1();
-		Sub2 orderItem;
-
-		String name, email, status, data;
-		Integer quantity, num;
-		Double price;
-
-		System.out.println("Enter client data -");
-		System.out.print("   Name: ");
-		name = sc.nextLine();
-		client.setName(name);
-		System.out.print("   E-mail: ");
-		email = sc.next();
-		client.setEmail(email);
-		System.out.print("   Birth Date (DD/MM/YYYY): ");
-		data = sc.next();
-		client.setBirthDate(sdf.parse(data));
-
-		System.out.println("Enter processing data -");
-		System.out.print("   Status: ");
-		status = sc.next();
-		System.out.print("   How many items to this order? ");
-		num = sc.nextInt();
-
-		order = new MainSub(new Date(), Enums.valueOf(status.toUpperCase()), client);
-
-		for (int i = 1; i <= num; i++) {
-			orderItem = new Sub2();
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
+		
+		List<Sub3> product=new ArrayList<>();
+		
+		System.out.print("Enter the number of products: ");
+		int num=sc.nextInt();
+		
+		for(int i=1;i<=num;i++) {
+			System.out.println("Product #"+i+" data -");
+			System.out.print("  Common, used or imported? (c,u,i) ");
+			String resp=sc.next();
 			
 			sc.nextLine();
-			System.out.println("Enter #" + i + " item data -");
-			System.out.print("  Product name: ");
-			name = sc.nextLine();
+			System.out.print("  Name: ");
+			String name=sc.nextLine();
 			
-			System.out.print("  Product price: $ ");
-			price = sc.nextDouble();
-			orderItem.setPrice(price);
+			System.out.print("  Price: $ ");
+			Double price=sc.nextDouble();
 			
-			System.out.print("  Quantity: ");
-			quantity = sc.nextInt();
-			orderItem.setQuantity(quantity);
+			if(resp.equalsIgnoreCase("c")) {
+				product.add(new Sub3(name, price));
+			}
 			
-			Sub3 product=new Sub3(name,price);
+			if(resp.equalsIgnoreCase("i")) {
+				System.out.print("  Customs fee: $ ");
+				Double custumsFee=sc.nextDouble();
+				product.add(new Sub2(name, price, custumsFee));
+			}
+			if(resp.equalsIgnoreCase("u")) {
+				System.out.print("  Manufacture date (DD/MM/YYY): ");
+				String date=sc.next();
+				product.add(new Sub1(name, price, sdf.parse(date)));
+				
+			}
 			
-			orderItem.setProduct(product);
-			
-			order.addItem(orderItem);
 		}
-
-		System.out.println("Order sumary -");
-		System.out.println(order);
-
+		
+		System.out.println("Price tags: ");
+		for(Sub3 list:product) {
+			System.out.println(list.priceTag());
+		}
+		
+		
 		sc.close();
 	}
 

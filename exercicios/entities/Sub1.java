@@ -3,50 +3,18 @@ package exercicios.entities;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Sub1 {
-	SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+public class Sub1 extends Sub3 {
+	SimpleDateFormat sdf=new SimpleDateFormat("dd/MM/yyyy");
 	
-	private String name;
-	private String email;
-	private Date birthDate;
+	private Date manufactureDate;
 
-	public Sub1() {
-		super();
+	public Sub1(String name, Double price, Date manufactureDate) {
+		super(name, price);
+		this.manufactureDate = manufactureDate;
 	}
 
-	public Sub1(String name, String email, Date birthDate) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.birthDate = birthDate;
+	@Override
+	public String priceTag() {
+		return super.getName() + " (used) $ " + super.getPrice() + " (Manufacture date: " + sdf.format(manufactureDate);
 	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public Date getBirthDate() {
-		return birthDate;
-	}
-
-	public void setBirthDate(Date birthDate) {
-		this.birthDate = birthDate;
-	}
-
-	public String toString() {
-		return name + " (" + sdf.format(birthDate)+") - " + email;
-	}
-
 }

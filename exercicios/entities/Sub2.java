@@ -1,51 +1,19 @@
 package exercicios.entities;
 
-public class Sub2 {
-	private Integer quantity;
-	private Double price;
-	private Sub3 product;
+public class Sub2 extends Sub3 {
+	private Double custumsFee;
 
-	public Sub2() {
-		super();
-	}
-
-	public Sub2(Integer quantity, Double price, Sub3 product) {
-		super();
-		this.quantity = quantity;
-		this.price = price;
-		this.product = product;
+	public Sub2(String name, Double price, Double custumsFee) {
+		super(name, price);
+		this.custumsFee=custumsFee;
 	}
 
-	public Integer getQuantity() {
-		return quantity;
+	public Double totalPrice() {
+		return super.getPrice() + custumsFee;
 	}
 
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
+	@Override
+	public String priceTag() {
+		return super.getName()+" $ "+ totalPrice()+ " (Customs fee: $ " +custumsFee  + ")";
 	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public Sub3 getProduct() {
-		return product;
-	}
-
-	public void setProduct(Sub3 product) {
-		this.product = product;
-	}
-
-	public Double subTotal() {
-		return price * quantity;
-	}
-	
-	public String toString() {
-		return product.getName()+", $"+price+", Quantity: "+quantity+", Subtotal: $ "+subTotal();
-	}
-	
 }
