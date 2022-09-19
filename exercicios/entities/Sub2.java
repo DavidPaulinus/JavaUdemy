@@ -1,19 +1,27 @@
 package exercicios.entities;
 
-public class Sub2 extends Sub3 {
-	private Double custumsFee;
+import exercicios.service.MainSub;
 
-	public Sub2(String name, Double price, Double custumsFee) {
-		super(name, price);
-		this.custumsFee=custumsFee;
-	}
+public class Sub2 extends MainSub {
+	private Integer numberOfemployees;
 
-	public Double totalPrice() {
-		return super.getPrice() + custumsFee;
+	public Sub2(String name, Double anuaIncome, Integer numberOfemployees) {
+		super(name, anuaIncome);
+		this.numberOfemployees = numberOfemployees;
 	}
 
 	@Override
-	public String priceTag() {
-		return super.getName()+" $ "+ totalPrice()+ " (Customs fee: $ " +custumsFee  + ")";
+	public Double tax() {
+		Double tax = 0.0;
+
+		if (numberOfemployees < 11) {
+			tax = super.getAnuaIncome() * 0.16;
+		}
+		if (numberOfemployees > 10) {
+			tax = super.getAnuaIncome() * 0.14;
+		}
+
+		return tax;
 	}
+
 }
