@@ -1,31 +1,34 @@
 package exercicios.service;
 
-public abstract class MainSub {
-	private String name;
-	private Double anuaIncome;
+public class MainSub {
+	private String holder;
+	private Integer number;
+	private Double balance=0d;
+	private Double withdrawLimit;
 
-	public MainSub(String name, Double anuaIncome) {
+	public MainSub(String holder, Integer number, Double withdrawLimit) {
 		super();
-		this.name = name;
-		this.anuaIncome = anuaIncome;
+		this.holder = holder;
+		this.number = number;
+		this.withdrawLimit = withdrawLimit;
 	}
 
-	public String getName() {
-		return name;
+	public Double getBalance() {
+		return balance;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void deposit(Double amaount) {
+		this.balance += amaount;
 	}
 
-	public Double getAnuaIncome() {
-		return anuaIncome;
+	public void withdraw(Double amaount) throws Exception {
+		if (amaount > withdrawLimit) {
+			throw new Exception("The amount exceeds withdraw limit");
+		}
+		if (amaount > balance) {
+			throw new Exception("Not enough balance");
+		}
+		this.balance -= amaount;
 	}
-
-	public void setAnuaIncome(Double anuaIncome) {
-		this.anuaIncome = anuaIncome;
-	}
-
-	public abstract Double tax();
 
 }
