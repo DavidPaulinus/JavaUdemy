@@ -1,37 +1,49 @@
 package exercicios;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 import java.util.Scanner;
+
+import exercicios.entities.Sub1;
+import exercicios.entities.Sub2;
+import exercicios.service.MainSub;
+import exercicios.service.Sub;
 
 public class Exercicios {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
+		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 
-		StringBuffer sb = new StringBuffer();
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\AdaumirM\\Downloads\\minhas coisas\\Programação\\eclipse\\JavaUdemy\\src\\exercicios\\summary.csv"))) {
-			for (int i = 0; i < 4; i++) {
+		System.out.println("Enter the contract data:");
+		System.out.print("Number: ");
+		Integer number = sc.nextInt();
+		
+		System.out.print("Date(dd/MM/yyyy): ");
+		LocalDate date = LocalDate.parse(sc.next(),dtf);
+		
+		System.out.print("Contract value: ");
+		Double totalValue = sc.nextDouble();
+		
+		Sub1 contract=new Sub1(number,date,totalValue);
+		
+		System.out.print("Enter the number of installments: ");
+		Integer installments = sc.nextInt();
+		
+		MainSub contractService = new MainSub(new Sub());
+		
 
-				System.out.println("Product name, price and quantity: ");
-				String[] product = sc.nextLine().split(",");
-
-				Double price = Double.parseDouble(product[1]) * Double.parseDouble(product[2]);
-
-				sb.append(product[0] + "," + (double) price + "\n");
-
-				bw.write(product[0] + "," + (double) price);
-				bw.newLine();
-
-			}
-		} catch (IOException e) {
-
-			System.out.println("Erro " + e.getMessage());
-
+		System.out.println("Installments:");
+		contractService.processContract(contract, installments);
+		
+		for(Sub2 installment:contract.getInstallments()) {
+			System.out.println(installment);
 		}
-		System.out.println(sb);
+
 
 		sc.close();
 	}
