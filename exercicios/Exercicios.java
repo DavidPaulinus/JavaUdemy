@@ -1,49 +1,44 @@
 package exercicios;
 
-import java.text.ParseException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import java.util.HashSet;
 import java.util.Scanner;
-
-import exercicios.entities.Sub1;
-import exercicios.entities.Sub2;
-import exercicios.service.MainSub;
-import exercicios.service.Sub;
+import java.util.Set;
 
 public class Exercicios {
 
-	public static void main(String[] args) throws ParseException {
-		Locale.setDefault(Locale.US);
+	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		Set<Integer> a = new HashSet<>();
+		System.out.print("How many students for course A? ");
+		int num = sc.nextInt();
 
-		System.out.println("Enter the contract data:");
-		System.out.print("Number: ");
-		Integer number = sc.nextInt();
-		
-		System.out.print("Date(dd/MM/yyyy): ");
-		LocalDate date = LocalDate.parse(sc.next(),dtf);
-		
-		System.out.print("Contract value: ");
-		Double totalValue = sc.nextDouble();
-		
-		Sub1 contract=new Sub1(number,date,totalValue);
-		
-		System.out.print("Enter the number of installments: ");
-		Integer installments = sc.nextInt();
-		
-		MainSub contractService = new MainSub(new Sub());
-		
-
-		System.out.println("Installments:");
-		contractService.processContract(contract, installments);
-		
-		for(Sub2 installment:contract.getInstallments()) {
-			System.out.println(installment);
+		for (int i = 0; i < num; i++) {
+			a.add(sc.nextInt());
 		}
 
+		System.out.print("How many students for course B? ");
+		num = sc.nextInt();
+		
+		Set<Integer> b = new HashSet<>();		
+		for (int i = 0; i < num; i++) {
+			b.add(sc.nextInt());
+		}
+
+		System.out.print("How many students for course C? ");
+		num = sc.nextInt();
+		
+		Set<Integer> c = new HashSet<>();	
+		for (int i = 0; i < num; i++) {
+			c.add(sc.nextInt());
+		}
+
+		Set<Integer> list = new HashSet<>(a);
+		list.addAll(b);
+		list.addAll(c);
+		
+		System.out.println("Total students: " + list.size());
+		
 
 		sc.close();
 	}
