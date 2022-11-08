@@ -2,9 +2,10 @@ package aulas;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import aulas.entities.Product;
-import aulas.util.PriceUpdate;
 
 public class Aulas {
 
@@ -17,15 +18,19 @@ public class Aulas {
 		list.add(new Product("Tablet", 350.50));
 		list.add(new Product("HD Case", 80.90));
 		
-		list.forEach(x -> x.setPrice(x.getPrice()*1.1));
+		List<String> names = list.stream().map(p -> p.getName().toUpperCase()).collect(Collectors.toList());
 		
-		//list.forEach(Product::nonStaticPriceUpdate);
+		//Function<Product,String> func = p -> p.getName().toUpperCase();
 		
-		//list.forEach(Product::staticPriceUpdate);
+		//List<String> names = list.stream().map(func).collect(Collectors.toList());
 		
-		//list.forEach(new PriceUpdate());
+		//List<String> names = list.stream().map(Product::nonStaticUpperCaseName).collect(Collectors.toList());
+		
+		//List<String> names = list.stream().map(Product::staticUpperCaseName).collect(Collectors.toList());
+		
+		//List<String> names = list.stream().map(new UpperCaseName()).collect(Collectors.toList());
 
-		list.forEach(System.out::println);
+		names.forEach(System.out::println);
 
 	}
 
